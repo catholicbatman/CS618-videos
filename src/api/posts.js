@@ -6,6 +6,11 @@ export const getPosts = async (queryParams) => {
   return await res.json()
 }
 
+export const getPostById = async (postId) => {
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/${postId}`)
+  return await res.json()
+}
+
 export const createPost = async (token, post) => {
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/
