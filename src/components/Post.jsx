@@ -9,7 +9,7 @@ export function Post({ title, contents, author, _id, fullPost = false }) {
       {fullPost ? (
         <h3>{title}</h3>
       ) : (
-        <Link to={`/posts/${_id} /${slug(title)}`}>
+        <Link to={`/posts/${_id}/${slug(title)}`}>
           <div>{title}</div>
         </Link>
       )}
