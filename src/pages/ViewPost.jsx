@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet-async'
 import { useEffect, useState } from 'react'
 import { postTrackEvent } from '../api/events.js'
 import { PostStats } from '../components/PostStats.jsx'
+import { getUserInfo } from '../api/users.js'
 
 export function ViewPost({ postId }) {
   const [session, setSession] = useState()
@@ -31,11 +32,20 @@ export function ViewPost({ postId }) {
     queryFn: () => getPostById(postId),
   })
   const post = postQuery.data
+
+  const userInfoQuery = useQuery({
+    queryKey: ['users', post?.author],
+    queryFn: () => getUserInfo(post?.author),
+    enabled: Boolean(post?.author),
+  })
+  const userInfo = userInfoQuery.data ?? {}
+
   return (
     <div style={{ padding: 8 }}>
       {post && (
         <Helmet>
           <title>{post.title} | Full-Stack React Blog</title>
+          <meta property='og:article:author' content={userInfo.username} />
         </Helmet>
       )}
       <Header />
@@ -46,7 +56,7 @@ export function ViewPost({ postId }) {
       <hr />
       {post ? (
         <div>
-          <Post {...post} fullPost />
+          <Post {...post} fullPost id={postId} author={userInfo} />
           <hr /> <PostStats postId={postId} />
         </div>
       ) : (

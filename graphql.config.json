@@ -1,0 +1,4 @@
+{
+  "schema": "https://silver-journey-97vq9xrq9qqw2454-3000.app.github.dev/graphql",
+  "documents": "src/api/graphql/**/*.{js,jsx}"
+}
